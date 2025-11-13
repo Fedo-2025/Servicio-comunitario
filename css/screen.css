@@ -1,0 +1,936 @@
+@charset "utf-8";
+/*Fuentes*/
+@font-face {
+  font-family: "oxygen";
+  /* El navegador moderno preferirá WOFF (más rápido y comprimido) */
+  src: url("../fonts/oxygen.woff") format("woff"), /* OTF sirve como un excelente respaldo (fallback) */
+    url("../fonts/oxygen.otf") format("opentype");
+
+  font-display: swap;
+}
+/* CSS Document */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body,
+html {
+  font-family: oxygen, Arial, Helvetica, sans-serif;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+body {
+  float: left;
+  width: 100%;
+}
+div {
+  width: 100%;
+}
+p {
+  margin: 10px auto;
+  padding: 0;
+}
+a {
+  color: #009cde;
+}
+aside a:hover {
+  color: #14448c;
+}
+img {
+  text-align: center;
+  border: 0;
+  margin: auto;
+  max-width: 100%;
+  height: auto;
+}
+.wrapper {
+  width: 100%;
+  margin: 0 auto;
+  float: left;
+}
+.container {
+  width: 990px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+#bg_wrap {
+  background-image: url(../images/bg_body.png);
+  background-position: center 6px;
+  background-repeat: no-repeat;
+  background-color: #0e53b1;
+}
+h5 {
+  color: #009cde;
+  margin-bottom: 15px;
+}
+/* Ocultar el cintillo sticky de redes sociales */
+#cintillo {
+  display: none !important;
+}
+
+/* Placeholder para evitar el bucle infinito del sticky */
+#header-placeholder {
+  width: 100%;
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/*---HEADER---*/
+header {
+  width: 970px;
+  max-width: 100%;
+  padding: 8px 10px 0 10px;
+  position: relative;
+  float: left;
+  margin: 0 auto;
+  overflow: visible;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Asegurar que el canvas del logo sea visible en todas las resoluciones */
+header canvas#logo {
+  z-index: 1;
+  position: absolute;
+  left: -32px;
+  display: block;
+}
+
+/* Mejorado sticky navbar con secciones centradas y resaltadas */
+header.sticky {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  background: linear-gradient(180deg, rgba(14, 83, 177, 0.98) 0%, rgba(0, 156, 222, 0.95) 100%);
+  padding: 12px 20px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 0 0 25px 25px;
+  width: 990px;
+  max-width: calc(100% - 20px);
+  backdrop-filter: blur(10px);
+  /* Removida la animación slideDown, ahora usa solo transiciones suaves */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Removida la animación slideDown ya que causaba transiciones bruscas al quitar sticky */
+
+header.sticky a.logo img {
+  width: 140px;
+  height: auto;
+  transition: all 0.3s ease;
+}
+
+header.sticky canvas {
+  display: none;
+}
+
+/* Centrar verticalmente las secciones del navbar sticky */
+header.sticky nav {
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Resaltar más las secciones del navbar sticky */
+header.sticky nav a {
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin: 0 2px;
+}
+
+header.sticky nav a:hover,
+header.sticky nav a.active {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Remover el padding del body ya que usamos placeholder */
+body.header-sticky-active #first {
+  padding-top: 128px;
+  transition: none;
+}
+
+header a.logo {
+  margin: 6px 0 0 8px;
+  position: relative;
+  float: left;
+  z-index: 2001;
+  transition: all 0.3s ease;
+}
+header canvas {
+  z-index: 1;
+  position: absolute;
+  left: -32px;
+}
+
+/* Mejorado botón hamburguesa con líneas más visibles */
+.menu-toggle {
+  display: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  padding: 8px;
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  z-index: 2002;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.menu-toggle span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: #fff;
+  margin: 5px 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.menu-toggle.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+header nav {
+  font-family: oxygen, Arial, Helvetica, sans-serif;
+  display: block;
+  position: absolute;
+  right: 20px;
+  bottom: 0;
+  z-index: 2001;
+  transition: all 0.3s ease;
+}
+header nav ul {
+  list-style: none;
+  margin: 0;
+}
+nav ul li {
+  float: left;
+}
+header nav a {
+  font-size: 120%;
+  position: relative;
+  text-decoration: none;
+  display: block;
+  color: #fff;
+  padding: 5px 9px;
+  transition: all 0.2s ease;
+}
+
+header nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+header nav span {
+  background: #000;
+  display: none;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  position: absolute;
+  right: 0;
+}
+
+/*---COntent---*/
+section.content#first {
+  background: url(../images/bg_content.png) repeat;
+  width: 990px;
+  max-width: 100%;
+  padding-top: 128px;
+  margin: -50px auto 0 auto;
+  -webkit-border-top-left-radius: 30px;
+  -webkit-border-top-right-radius: 30px;
+  -moz-border-radius-topleft: 30px;
+  -moz-border-radius-topright: 30px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  transition: padding-top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+section.content {
+  width: 100%;
+  float: left;
+  position: relative;
+  background: #fff;
+  padding-bottom: 20px;
+}
+#slider {
+  width: 970px;
+  max-width: 100%;
+  display: block;
+  padding: 0 10px 0 10px;
+  float: left;
+  overflow: hidden;
+}
+#slider #slider_contenedor {
+  position: relative;
+}
+.slide {
+  padding: 0;
+  color: #ffffff;
+  text-shadow: 1px 1px 1px #000;
+  width: 970px;
+  max-width: 100%;
+  position: absolute;
+}
+.slide h1 {
+  font-weight: normal;
+  color: #fff;
+  font-size: 250%;
+  line-height: 40px;
+  padding: 22px 0 10px 0;
+}
+.slide p {
+  font-size: 130%;
+  text-align: justify;
+}
+/* Arreglado el tamaño de la imagen del slider */
+.slide img {
+  float: left;
+  margin-right: 23px;
+  max-width: 411px;
+  width: 100%;
+  height: auto;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.75);
+}
+#slider ul {
+  float: right;
+  position: relative;
+  margin: 45px 0 25px 0;
+}
+#slider ul li {
+  display: block;
+  margin: 0 1px 0 1px;
+  position: relative;
+  float: left;
+  width: 24px;
+  height: 23px;
+  background: url(../images/btn_slider.png) no-repeat bottom center;
+}
+#slider ul li:hover {
+  cursor: pointer;
+  background: url(../images/btn_slider.png) no-repeat top center;
+}
+#slider ul li.act {
+  cursor: auto;
+  background: url(../images/btn_slider.png) no-repeat top center;
+}
+/*-NAV SLIDER-*/
+#slider ul.nav_slider {
+  float: left;
+  position: relative;
+  margin: 0;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+}
+#slider ul.nav_slider li {
+  display: table;
+  width: 234px;
+  max-width: calc(50% - 15px);
+  float: left;
+  margin: 0 0 10px 11px;
+  padding: 3px 0 0 0;
+  background: #fff;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 1);
+  -moz-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 1);
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 1);
+}
+#slider ul.nav_slider a {
+  display: inline-block;
+  width: 100%;
+  padding: 15px 10px;
+  color: #009cde;
+  text-align: center;
+  text-decoration: none;
+  font-size: 120%;
+  font-weight: bold;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  -webkit-box-shadow: inset 0px 11px 22px 0px rgba(152, 152, 152, 0.35);
+  -moz-box-shadow: inset 0px 11px 22px 0px rgba(152, 152, 152, 0.35);
+  box-shadow: inset 0px 11px 22px 0px rgba(152, 152, 152, 0.35);
+}
+#slider ul.nav_slider li:first-child {
+  margin-left: 0;
+}
+section.content aside {
+  padding: 15px 10px;
+  width: 475px;
+  max-width: 100%;
+  float: left;
+  font-family: "Droid Sans", Arial, Helvetica, sans-serif;
+}
+section.content aside h2 {
+  margin: 30px 0;
+  font-size: 240%;
+  font-weight: normal;
+}
+section.content aside h3 {
+  margin: 30px 0 0 0;
+  font-size: 200%;
+  font-weight: normal;
+}
+section.content aside li {
+  font-family: Arial, Helvetica, sans-serif;
+  list-style: none;
+  background: url(../images/bullet.png) no-repeat;
+  min-height: 32px;
+  padding: 3px 0 0 40px;
+  vertical-align: central;
+  font-size: 130%;
+}
+section.content aside li ul li {
+  background: none;
+  padding: 0 0 0 15px;
+  list-style: none;
+  font-size: 70%;
+}
+section.content aside ul.proximos li {
+  background: url(../images/bullet_flecha.png) no-repeat;
+}
+
+/* Arreglada la torta para que funcione la animación correctamente */
+#torta {
+  background: url(../images/logo_torta.png) center center no-repeat;
+  background-size: contain;
+  overflow: visible;
+  width: 100%;
+  max-width: 477px;
+  height: 477px;
+  position: relative;
+  text-align: left;
+  vertical-align: bottom;
+  margin: 0 auto;
+}
+
+#torta img {
+  margin: 0;
+  padding: 0;
+  max-width: 50%;
+  height: auto;
+}
+
+#torta a {
+  position: absolute;
+  display: block;
+  width: 50%;
+  height: 50%;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+#torta a:nth-child(1) {
+  top: 0;
+  left: 0;
+  transform: translate(60px, 60px);
+}
+
+#torta a:nth-child(2) {
+  top: 0;
+  right: 0;
+  transform: translate(-60px, 60px);
+}
+
+#torta a:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  transform: translate(60px, -60px);
+}
+
+#torta a:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  transform: translate(-60px, -60px);
+}
+
+/* Arreglado grid de logos de marcas en página soluciones para que estén horizontales */
+section.content aside a.marca {
+  float: left;
+  width: 48%;
+  margin: 1%;
+  display: inline-block;
+}
+
+section.content aside a.marca img {
+  width: 100%;
+  height: auto;
+}
+
+.vertodos {
+  float: right;
+  margin: 20px 10px;
+  padding: 5px 10px;
+  background: #009cde;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+.vertodos:hover {
+  background: #14448c;
+  cursor: pointer;
+  color: #fff;
+}
+form {
+  display: block;
+  float: right;
+  width: 100%;
+  position: relative;
+}
+input,
+textarea {
+  border: 1px solid #009cde;
+  max-width: 310px;
+  width: 100%;
+  margin: 0 10px 20px 0;
+  padding: 2px;
+}
+input.active,
+textarea.active {
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(255, 0, 51, 1);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(255, 0, 51, 1);
+  box-shadow: 0px 0px 5px 0px rgba(255, 0, 51, 1);
+}
+dt {
+  float: left;
+  clear: both;
+}
+dd {
+  float: right;
+}
+dd:last-child {
+  clear: both;
+}
+dd:last-child input {
+  width: auto;
+}
+#mensajecontacto {
+  float: left;
+  color: #14448c;
+  position: absolute;
+  display: none;
+  border: 1px solid #aaa;
+  overflow: visible;
+  background: #ccc;
+  background-image: linear-gradient(bottom, #eee 0%, #ffffff 100%);
+  background-image: -o-linear-gradient(bottom, #eee 0%, #ffffff 100%);
+  background-image: -moz-linear-gradient(bottom, #eee 0%, #ffffff 100%);
+  background-image: -webkit-linear-gradient(bottom, #eee 0%, #ffffff 100%);
+  background-image: -ms-linear-gradient(bottom, #eee 0%, #ffffff 100%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(1, #ffffff));
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+#mensajecontacto p {
+  margin: 10px;
+}
+#mensajecontacto span {
+  background: #fff;
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: -6px;
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  border-right: 1px solid #aaa;
+  border-top: 1px solid #aaa;
+  transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg); /* IE 9 */
+  -webkit-transform: rotate(-45deg); /* Safari and Chrome */
+}
+/*------FOOTER------*/
+footer {
+  float: left;
+  width: 100%;
+  /*background:#009cde;*/
+  padding: 15px 0 10px 0;
+  text-align: center;
+}
+footer p {
+  color: #000;
+  font-size: 75%;
+  position: relative;
+  z-index: 1001;
+  margin: 0;
+}
+footer nav {
+  width: 990px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1001;
+  font-size: 150%;
+  font-weight: lighter;
+}
+footer ul {
+  list-style: none;
+  text-align: center;
+  margin: 0 auto;
+  display: inline-block;
+}
+footer li {
+  float: left;
+  color: #fff;
+}
+footer li a {
+  padding: 5px 9px;
+  color: #fff;
+  text-decoration: none;
+}
+footer li a.active,
+footer li a:hover {
+  color: #000;
+}
+
+/* Media queries mejoradas para diseño responsive completo sin bugs */
+@media screen and (max-width: 990px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  header {
+    width: 100%;
+    padding: 8px 5px 0 5px;
+  }
+
+  header.sticky {
+    width: 100%;
+    max-width: calc(100% - 20px);
+  }
+
+  /* Ajustar canvas del logo en tablets */
+  header canvas#logo {
+    left: -20px;
+    transform: scale(0.9);
+    transform-origin: left top;
+  }
+
+  /* Torta responsive en tablets */
+  #torta {
+    max-width: 400px;
+    height: 400px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  /* Mostrar menú hamburguesa en tablets y móviles */
+  .menu-toggle {
+    display: block;
+  }
+
+  header {
+    padding: 8px 10px;
+  }
+
+  /* Ajustar canvas del logo en móviles para que se vea la forma blanca */
+  header canvas#logo {
+    left: -15px;
+    transform: scale(0.75);
+    transform-origin: left top;
+  }
+
+  header a.logo img {
+    width: 120px;
+    height: auto;
+  }
+
+  header.sticky a.logo img {
+    width: 100px;
+  }
+
+  header.sticky .menu-toggle {
+    top: 18px;
+  }
+
+  /* Menú hamburguesa con diseño moderno de pantalla completa */
+  header nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 380px;
+    height: 100vh;
+    background: linear-gradient(180deg, #0e53b1 0%, #009cde 100%);
+    padding: 100px 30px 30px 30px;
+    transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    overflow-y: auto;
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    transform: none;
+  }
+
+  header.sticky nav {
+    transform: none;
+    top: 0;
+    padding-top: 100px;
+  }
+
+  header nav.active {
+    right: 0;
+  }
+
+  /* Overlay oscuro cuando el menú está abierto */
+  header nav.active::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+
+  header nav ul {
+    display: block;
+    width: 100%;
+  }
+
+  header nav ul li {
+    float: none;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  header nav a {
+    font-size: 120%;
+    padding: 16px 22px;
+    display: block;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+
+  header nav a:hover,
+  header nav a.active {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateX(8px);
+  }
+
+  body.header-sticky-active #first {
+    padding-top: 75px;
+    transition: padding-top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slide h1 {
+    font-size: 180%;
+    line-height: 32px;
+    padding: 18px 0 10px 0;
+  }
+
+  .slide p {
+    font-size: 115%;
+  }
+
+  #slider ul.nav_slider li {
+    width: calc(50% - 10px);
+    max-width: 100%;
+    margin: 0 5px 10px 5px;
+  }
+
+  section.content aside {
+    width: 100%;
+    padding: 15px 10px;
+  }
+
+  section.content aside h2 {
+    font-size: 200%;
+    margin: 25px 0;
+  }
+
+  /* Torta responsive en tablets con animación funcional */
+  #torta {
+    max-width: 350px;
+    height: 350px;
+  }
+
+  #torta a:nth-child(1) {
+    transform: translate(50px, 50px);
+  }
+
+  #torta a:nth-child(2) {
+    transform: translate(-50px, 50px);
+  }
+
+  #torta a:nth-child(3) {
+    transform: translate(50px, -50px);
+  }
+
+  #torta a:nth-child(4) {
+    transform: translate(-50px, -50px);
+  }
+
+  footer nav {
+    font-size: 130%;
+  }
+
+  footer li a {
+    padding: 5px 6px;
+    font-size: 95%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* Canvas del logo más pequeño en móviles pequeños */
+  header canvas#logo {
+    left: -10px;
+    transform: scale(0.6);
+    transform-origin: left top;
+  }
+
+  /* Logo más pequeño en móviles */
+  header a.logo img {
+    width: 90px;
+  }
+
+  header.sticky a.logo img {
+    width: 75px;
+  }
+
+  .menu-toggle {
+    top: 15px;
+    right: 10px;
+    padding: 7px;
+  }
+
+  .menu-toggle span {
+    width: 26px;
+    height: 3px;
+    margin: 4px 0;
+  }
+
+  header nav {
+    width: 90%;
+    max-width: 320px;
+    padding: 85px 25px 25px 25px;
+  }
+
+  header nav a {
+    font-size: 115%;
+    padding: 14px 18px;
+  }
+
+  body.header-sticky-active #first {
+    padding-top: 65px;
+    transition: padding-top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slide h1 {
+    font-size: 150%;
+    line-height: 26px;
+    padding: 12px 0 8px 0;
+  }
+
+  .slide p {
+    font-size: 100%;
+  }
+
+  #slider ul.nav_slider li {
+    width: 100%;
+    margin: 0 0 10px 0;
+  }
+
+  #slider ul.nav_slider a {
+    font-size: 105%;
+    padding: 14px 12px;
+  }
+
+  section.content aside h2 {
+    font-size: 160%;
+  }
+
+  section.content aside h3 {
+    font-size: 145%;
+  }
+
+  section.content aside li {
+    font-size: 115%;
+    padding: 3px 0 0 38px;
+    background-size: 28px;
+  }
+
+  /* Torta más pequeña en móviles con animación funcional */
+  #torta {
+    max-width: 300px;
+    height: 300px;
+  }
+
+  #torta a:nth-child(1) {
+    transform: translate(40px, 40px);
+  }
+
+  #torta a:nth-child(2) {
+    transform: translate(-40px, 40px);
+  }
+
+  #torta a:nth-child(3) {
+    transform: translate(40px, -40px);
+  }
+
+  #torta a:nth-child(4) {
+    transform: translate(-40px, -40px);
+  }
+
+  footer nav {
+    font-size: 105%;
+  }
+
+  footer li {
+    float: none;
+    display: inline-block;
+  }
+
+  footer li a {
+    font-size: 90%;
+    padding: 4px 5px;
+  }
+}
+/* Fin de media queries responsive */
